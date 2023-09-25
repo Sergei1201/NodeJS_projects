@@ -1,0 +1,12 @@
+body {
+    background: lightgrey;
+}
+
+p {
+    margin: 5px !important
+}
+.login-container {
+    width: 400px;
+    text-align: center;
+    margin-top: 20px;
+}

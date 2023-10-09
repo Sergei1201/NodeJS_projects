@@ -1,5 +1,5 @@
 <h6>Dashboard</h6>
-<h3>Welcome {{name}}</h3>
+<h3>Welcome {{user}}</h3>
 <p>Your stories</p>
 
 {{#if stories}}
@@ -15,7 +15,7 @@
         {{#each stories}}
         <tr>
             <td><a href="/stories/{{_id}}">{{title}}</a></td>
-            <td>{{createdAt}}</td>
+            <td>{{formatDate createdAt 'YYYY-MM-DD HH:mm'}}</td>
             <td><span class="dash-status">{{status}}</span></td>
         </tr>
         {{/each}}

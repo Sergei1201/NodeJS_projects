@@ -21,13 +21,21 @@ const app = express()
 // Body parser
 app.use(express.urlencoded({extended: false}))
 app.use(express.json())
+
 // Use morgan if in the development mode
 if (process.env.NODE_ENV == 'development') {
     app.use(morgan('short'))
 }
 
+// Handlebars helpers
+const {formatDate, truncate, stripTags} = require('./helpers/hbs')
+
 // Handlebars
-app.engine('.hbs', exphbs.engine({defaultLayout: 'main', extname: '.hbs'}));
+app.engine('.hbs', exphbs.engine({helpers: {
+  formatDate,
+  truncate,
+  stripTags},
+  defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
 // Session middleware

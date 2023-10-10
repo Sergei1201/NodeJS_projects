@@ -8,6 +8,26 @@ router.get('/add', ensureAuth, (req, res) => {
     res.render('stories/add')
 })
 
+// Edit Story (GET)
+router.get('/edit/:id', ensureAuth, async (req, res) => {
+    // Match the database user against the URL user
+    let story = await Story.findOne({
+        _id: req.params.id
+    }).lean()
+
+    if (!story) {
+        return res.render('errors/404')
+    }
+    if (story.user != req.user._id) {
+        res.redirect('/stories')
+    } else {
+        res.render('stories/edit', {
+            story
+        })
+        console.log(story)
+    }
+})
+
 // Add Story (POST)
 router.post('/', ensureAuth, async (req, res) => {
     try {

@@ -28,13 +28,14 @@ if (process.env.NODE_ENV == 'development') {
 }
 
 // Handlebars helpers
-const {formatDate, truncate, stripTags} = require('./helpers/hbs')
+const {formatDate, truncate, stripTags, editIcon} = require('./helpers/hbs')
 
 // Handlebars
 app.engine('.hbs', exphbs.engine({helpers: {
   formatDate,
   truncate,
-  stripTags},
+  stripTags,
+  editIcon},
   defaultLayout: 'main', extname: '.hbs'}));
 app.set('view engine', '.hbs');
 
@@ -50,6 +51,12 @@ app.use(session({
 // Passport middleware
 app.use(passport.initialize())
 app.use(passport.session())
+
+// Global variables middleware
+app.use((req, res, next) => {
+  res.locals.user = req.user || null
+  next()
+})
 
 
 // Static folder
